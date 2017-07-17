@@ -41,7 +41,7 @@ class TodoList extends HTMLElement {
 
     // Should be called by it's parent element and creates a new TODO item.
     addTodoWithText(text) {
-        let todoItem = new TodoItem(text, document)
+        let todoItem = new TodoItem(text)
 
         // If it's the first TODO, just append to the list.       
         if (this._numberOfTodos == 0) {
