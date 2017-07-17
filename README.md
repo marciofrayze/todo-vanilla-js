@@ -1,6 +1,6 @@
 # TODO Vanilla JS
 
-A simple TODO example using vanilla JS but featuring HTML import and web components.
+A simple TODO example using vanilla JS but featuring HTML import and Web Components.
 
 Please use Google-Chrome. No polyfills are provided so it may not work on other browsers (yet).
 
@@ -18,7 +18,7 @@ The data flow is as follow: the parent components are allowed to call methods fr
 
 ## Why this project was created?
 
-To learn more about JavaScript and web-components.
+To learn more about JavaScript and Web Components.
 
 ## This example is too complex!
 
