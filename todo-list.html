@@ -30,13 +30,13 @@ class TodoList extends HTMLElement {
         shadowDom.appendChild(clonedTemplate)
 
         // Stores references to some template elements.
-        this._todosListNoTodosTitleSpan = shadowDom.querySelector('#todosListNoTodosTitle');       
-        this._todosListTitleSpan = shadowDom.querySelector('#todosListTitle');
-        this._todoList = shadowDom.querySelector('#todoList');
+        this._todosListNoTodosTitleNode = shadowDom.getElementById('todosListNoTodosTitle')
+        this._todosListTitleNode = shadowDom.getElementById('todosListTitle')
+        this._todoListNode = shadowDom.getElementById('todoList')
         this._numberOfTodos = 0
 
         // Adding events handler.
-        this._todoList.addEventListener('deleteTodo', this.deletedTodoEventHandler.bind(this), false)
+        this._todoListNode.addEventListener('deleteTodo', this.deletedTodoEventHandler.bind(this), false)
     }
 
     // Should be called by it's parent element and creates a new TODO item.
@@ -45,11 +45,11 @@ class TodoList extends HTMLElement {
 
         // If it's the first TODO, just append to the list.       
         if (this._numberOfTodos == 0) {
-            this._todoList.appendChild(todoItem)
+            this._todoListNode.appendChild(todoItem)
         } else {
-            // Append as the first element of the todoList.
-            let firstTodo = this._todoList.firstChild
-            this._todoList.insertBefore(todoItem, firstTodo)
+            // Append before the first element of the todoList.
+            let firstTodo = this._todoListNode.firstChild
+            this._todoListNode.insertBefore(todoItem, firstTodo)
         }
 
         this._numberOfTodos++
@@ -59,21 +59,19 @@ class TodoList extends HTMLElement {
     // Listen to it's childs and is executed whenever a child sends an event telling it 
     // wants to remove itself from the list.
     deletedTodoEventHandler(e) {
-       
-        this._todoList.removeChild(e.detail)
+        this._todoListNode.removeChild(e.detail)
         this._numberOfTodos--
-
         this.updateTitleVisibility()
     }
 
     // Updates the title.
     updateTitleVisibility() {
         if (this._numberOfTodos > 0) {
-            this._todosListNoTodosTitleSpan.style.display = 'none'
-            this._todosListTitleSpan.style.display = 'block'
+            this._todosListNoTodosTitleNode.style.display = 'none'
+            this._todosListTitleNode.style.display = 'block'
         } else {
-            this._todosListNoTodosTitleSpan.style.display = 'block'
-            this._todosListTitleSpan.style.display = 'none'            
+            this._todosListNoTodosTitleNode.style.display = 'block'
+            this._todosListTitleNode.style.display = 'none'            
         }
     }
    
