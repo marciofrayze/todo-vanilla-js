@@ -25,18 +25,18 @@ class TodoList extends HTMLElement {
         // Cloning template.
         let clonedTemplate = document.importNode(this._template.content, true)
 
-        // Creating shadow dom for this component.
-        let shadowDom = this.attachShadow( { mode: 'open' } )
-        shadowDom.appendChild(clonedTemplate)
-
         // Stores references to some template elements.
-        this._todosListNoTodosTitleNode = shadowDom.getElementById('todosListNoTodosTitle')
-        this._todosListTitleNode = shadowDom.getElementById('todosListTitle')
-        this._todoListNode = shadowDom.getElementById('todoList')
+        this._todosListNoTodosTitleNode = clonedTemplate.getElementById('todosListNoTodosTitle')
+        this._todosListTitleNode = clonedTemplate.getElementById('todosListTitle')
+        this._todoListNode = clonedTemplate.getElementById('todoList')
         this._numberOfTodos = 0
 
+        this.append(clonedTemplate)
+
         // Adding events handler.
-        this._todoListNode.addEventListener('deleteTodo', this.deletedTodoEventHandler.bind(this), false)
+        this._todoListNode.addEventListener('deleteTodo', 
+                                            this.deletedTodoEventHandler.bind(this), 
+                                            false)
     }
 
     // Should be called by it's parent element and creates a new TODO item.
