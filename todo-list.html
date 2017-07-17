@@ -1,0 +1,86 @@
+
+<template id='todoListTemplate'>
+
+    <!-- This span is shown when there are no TODOs in the list or hidden otherwise. -->
+    <span id='todosListNoTodosTitle'>
+        There are no TODOs to be shown.
+    </span>
+
+    <!-- This span is shown when there are at least one TODO in the list or hidden otherwise. -->
+    <span id='todosListTitle' hidden>
+        Todos:
+    </span>
+    
+    <ul id='todoList'></ul>
+</template>
+
+<script>
+'use strict';
+
+class TodoList extends HTMLElement {
+
+    constructor() {
+        super();
+
+        // Cloning template.
+        let clonedTemplate = document.importNode(this._template.content, true)
+
+        // Creating shadow dom for this component.
+        let shadowDom = this.attachShadow( { mode: 'open' } )
+        shadowDom.appendChild(clonedTemplate)
+
+        // Stores references to some template elements.
+        this._todosListNoTodosTitleSpan = shadowDom.querySelector('#todosListNoTodosTitle');       
+        this._todosListTitleSpan = shadowDom.querySelector('#todosListTitle');
+        this._todoList = shadowDom.querySelector('#todoList');
+        this._numberOfTodos = 0
+
+        // Adding events handler.
+        this._todoList.addEventListener('deleteTodo', this.deletedTodoEventHandler.bind(this), false)
+    }
+
+    // Should be called by it's parent element and creates a new TODO item.
+    addTodoWithText(text) {
+        let todoItem = new TodoItem(text, document)
+
+        // If it's the first TODO, just append to the list.       
+        if (this._numberOfTodos == 0) {
+            this._todoList.appendChild(todoItem)
+        } else {
+            // Append as the first element of the todoList.
+            let firstTodo = this._todoList.firstChild
+            this._todoList.insertBefore(todoItem, firstTodo)
+        }
+
+        this._numberOfTodos++
+        this.updateTitleVisibility()
+    }
+
+    // Listen to it's childs and is executed whenever a child sends an event telling it 
+    // wants to remove itself from the list.
+    deletedTodoEventHandler(e) {
+       
+        this._todoList.removeChild(e.detail)
+        this._numberOfTodos--
+
+        this.updateTitleVisibility()
+    }
+
+    // Updates the title.
+    updateTitleVisibility() {
+        if (this._numberOfTodos > 0) {
+            this._todosListNoTodosTitleSpan.style.display = 'none'
+            this._todosListTitleSpan.style.display = 'block'
+        } else {
+            this._todosListNoTodosTitleSpan.style.display = 'block'
+            this._todosListTitleSpan.style.display = 'none'            
+        }
+    }
+   
+}
+
+TodoList.prototype._template = document.currentScript.ownerDocument.getElementById('todoListTemplate')
+
+customElements.define('todo-list', TodoList)
+
+</script>

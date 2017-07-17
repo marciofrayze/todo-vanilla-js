@@ -1,0 +1,52 @@
+
+<template id='todoItemTemplate'>
+    <li>
+        <label id='todoItemLabel' />
+    </li>
+    <input id='deleteTodoButton' 
+           type='button'
+           value='delete' />    
+</template>
+
+<script>
+'use strict';
+
+class TodoItem extends HTMLElement {
+
+    constructor(labelText, document) {
+        super()
+
+        // Cloning template.
+        let clonedTemplate = document.importNode(this._template.content, true)
+
+        // Adding click event for the Delete buton.
+        let deleteTodoButton = clonedTemplate.getElementById('deleteTodoButton')
+        deleteTodoButton.addEventListener('click', this.delete.bind(this))
+
+        this.appendChild(clonedTemplate)
+
+        // Stores the node label pointer in case we need to access it.
+        this._labelNode = this.querySelector('#todoItemLabel')
+
+        this.updateLabelTo(labelText)
+    }
+
+    updateLabelTo(labelText) {
+        this._labelNode.innerText = labelText
+    }
+
+    delete() {
+        // The item does not delete itself.
+        // It only sends a message so its parent can be aware of it
+        // and then delete its child from the DOM.
+        let deleteTodoEvent = new CustomEvent('deleteTodo', { 'detail': this })
+        this.parentNode.dispatchEvent(deleteTodoEvent)
+    }    
+
+}
+
+TodoItem.prototype._template = document.currentScript.ownerDocument.getElementById('todoItemTemplate')
+
+customElements.define('todo-item', TodoItem)
+
+</script>

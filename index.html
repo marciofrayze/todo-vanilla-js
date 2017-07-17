@@ -1,0 +1,26 @@
+
+<!DOCTYPE html>
+<html lang="pt-br" manifest="todo.manifest">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TODO Web Components</title>
+
+    <!-- HTML import works fine on google-chrome but may not work on other browsers without polyfill. -->
+    <link rel=import href='todo-item.html'>
+    <link rel=import href='todo-list.html'>
+    <link rel=import href='todo-form.html'>
+
+  </head>
+  <body>
+    <div class="container">
+   
+      <h1>TODO Web Component</h1>
+   
+      <todo-form></todo-form>
+        
+    </div>
+
+  </body>
+</html>

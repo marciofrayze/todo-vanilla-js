@@ -1,0 +1,80 @@
+
+<template id='todoFormTemplate'>
+
+    <form id='todoForm'>
+        <input type='text' 
+               id='todoTitleInput' 
+               placeholder='Insert TODO'>
+        <input id='insertTodoButton' 
+               type='button' 
+               value='Insert'>
+        <span id='invalidInputAlert' hidden>Invalid input.</span>
+
+        <p>
+            <todo-list></todo-list>
+        </p>
+    </form>
+
+</template>
+
+<script>
+'use strict'
+
+class TodoForm extends HTMLElement {
+
+    constructor() {
+        super()
+
+        // Cloning template.
+        let clonedTemplate = document.importNode(this._template.content, true)
+
+        // Creating shadow dom for this component.
+        let shadowDom = this.attachShadow( { mode: 'open' } )
+        shadowDom.appendChild(clonedTemplate)
+
+        // Stores references to some template elements.
+        this._todoTitleInputNode = this.shadowRoot.getElementById('todoTitleInput')
+        this._todoListNode = this.shadowRoot.querySelector('todo-list')
+        this._todoFormNode = this.shadowRoot.getElementById('todoForm')
+        this._insertButtonNode = this.shadowRoot.getElementById('insertTodoButton')
+        this._invalidInputAlertNode = this.shadowRoot.getElementById('invalidInputAlert')
+
+        // Adding events to button and form submit.        
+        this._insertButtonNode.addEventListener('click', this.insertTodo.bind(this))
+        this._todoFormNode.addEventListener('submit', this.insertTodo.bind(this))
+    }
+
+    // Called when users wants to add new TODO.
+    insertTodo(event) {
+        // Preventing defaults (so we can avoid page reload in case it's a submit).
+        event.preventDefault()
+
+        if (this.validate() == true) {
+            let todoText = this._todoTitleInputNode.value       
+            this._todoListNode.addTodoWithText(todoText)
+            this._todoTitleInputNode.value = ''
+        }
+    }
+
+    // Validates if form is valid. If not, shows an alert.
+    validate() {
+        
+        let isValid = (this._todoTitleInputNode.value.trim() != '')
+
+        if (isValid) {
+            this._invalidInputAlertNode.style.display = 'none'
+        } else {
+            this._invalidInputAlertNode.style.display = 'block'
+        }
+
+        return isValid
+    }
+  
+}
+
+// Stores a reference to the template. This was the easiest way I found to do it that always works.
+TodoForm.prototype._template = document.currentScript.ownerDocument.getElementById('todoFormTemplate')
+
+customElements.define('todo-form', TodoForm)
+
+</script>
