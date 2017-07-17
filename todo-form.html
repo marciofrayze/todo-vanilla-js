@@ -56,6 +56,8 @@ class TodoForm extends HTMLElement {
             this._todoListNode.addTodoWithText(todoText)
             this._todoTitleInputNode.value = ''
         }
+
+        this._todoTitleInputNode.focus()
     }
 
     // Validates if form is valid. If not, shows an alert.
