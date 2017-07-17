@@ -27,3 +27,6 @@ Sure. You could do a much simpler TODO using plain JavaScript. But the goal of t
 ## Can I use something like this in production?
 
 Probably not a good idea! ;) But if you do, make sure you are using HTML import polyfills (otherwise HTML import will not work on FireFox and other browsers).
+
+# Author
+TODO Vanilla JS is developed by Marcio Frayze David - mfdavid@gmail.com - [@marciofrayze](https://twitter.com/marciofrayze).
