@@ -63,6 +63,20 @@ class TodoForm extends HTMLElement {
         // Adding events to button and form submit.        
         this._insertButtonNode.addEventListener('click', this.insertTodoCallBack.bind(this))
         this._todoFormNode.addEventListener('submit', this.insertTodoCallBack.bind(this))
+
+        shadowDom.addEventListener('doneTodo', 
+                                   this.childUpdatedEventHandler.bind(this), 
+                                   true)       
+
+        shadowDom.addEventListener('deleteTodo', 
+                                   this.childUpdatedEventHandler.bind(this), 
+                                   true)
+    }
+
+    // Called when a child was updated.
+    childUpdatedEventHandler() {
+        // Just set the focus back to the input.
+        this._todoTitleInputNode.focus()
     }
 
     // Called when users wants to add new TODO.

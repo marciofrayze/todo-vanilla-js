@@ -3,9 +3,20 @@
     <li>
         <label id='todoItemLabel' />
     </li>
+    <input id='doneTodoCheckBox'
+           type='checkbox'> <span id='doneLabel'>done</span>
     <input id='deleteTodoButton' 
-        type='button'
-        value='delete' />    
+           type='button'
+           value='delete'>
+
+    <style>
+        .done {
+            text-decoration: line-through;
+        }
+        #doneLabel {
+             margin-right: 7px;
+        }
+    </style>        
 </template>
 
 
@@ -20,21 +31,36 @@ class TodoItem extends HTMLElement {
         // Cloning template.
         let clonedTemplate = document.importNode(this._template.content, true)
 
-        // Adding click event for the Delete buton.
-        let deleteTodoButton = clonedTemplate.getElementById('deleteTodoButton')
-        deleteTodoButton.addEventListener('click', this.delete.bind(this))
-
         this.appendChild(clonedTemplate)
 
         // Stores the node label pointer in case we need to access it.
-        this._labelNode = this.querySelector('#todoItemLabel')
+        this._labelNodeNode = this.querySelector('#todoItemLabel')
+        this._deleteTodoButtonNode = this.querySelector('#deleteTodoButton')
+        this._doneTodoCheckBox = this.querySelector('#doneTodoCheckBox')
+
+        // Adding click event for the Delete buton.       
+        this._deleteTodoButtonNode.addEventListener('click', this.delete.bind(this))
+        this._doneTodoCheckBox.addEventListener('change', this.done.bind(this))
 
         this.updateLabelTo(labelText)
     }
 
     updateLabelTo(labelText) {
-        this._labelNode.innerText = labelText
+        this._labelNodeNode.innerText = labelText
     }
+
+    done() {
+        if (this._doneTodoCheckBox.checked) {
+            this._labelNodeNode.classList.add('done');
+        } else {
+            this._labelNodeNode.classList.remove('done');
+        }
+
+        // Sends a message so its parent can be aware that this item changed.
+        let doneTodoEvent = new CustomEvent('doneTodo', { 'detail': this })
+        this.parentNode.dispatchEvent(doneTodoEvent)
+
+    }    
 
     delete() {
         // The item does not delete itself.

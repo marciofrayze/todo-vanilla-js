@@ -35,8 +35,7 @@ class TodoList extends HTMLElement {
 
         // Adding events handler.
         this._todoListNode.addEventListener('deleteTodo', 
-                                            this.deletedTodoEventHandler.bind(this), 
-                                            false)
+                                            this.deletedTodoEventHandler.bind(this))
     }
 
     // Should be called by it's parent element and creates a new TODO item.
