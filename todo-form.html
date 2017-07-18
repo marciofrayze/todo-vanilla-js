@@ -6,6 +6,8 @@
                id='todoTitleInput' 
                placeholder='Insert TODO text'
                autocomplete='off'
+               size='80'
+               maxlength='144'
                autofocus>
         <input id='insertTodoButton' 
                type='button' 
@@ -16,6 +18,23 @@
             <todo-list></todo-list>
         </p>
     </form>
+
+    <style>
+        form {
+            background: #ffe5e5;
+            padding: 10px;
+            margin: 5px;
+        }
+
+        todo-list li {
+            margin-top: 15px;
+        }
+
+        #invalidInputAlert {
+            color: red;
+        }
+
+    </style>
 
 </template>
 
