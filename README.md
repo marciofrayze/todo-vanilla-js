@@ -4,7 +4,7 @@ A simple TODO example using vanilla JS but featuring HTML import and Web Compone
 
 Please use Google-Chrome. No polyfills are provided so it may not work on other browsers (yet).
 
-## How to test
+## How to
 
 Clone/download this repository. 
 
