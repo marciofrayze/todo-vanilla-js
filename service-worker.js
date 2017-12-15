@@ -1,3 +1,4 @@
+// This is just an example on how to create/register a service-worker.
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/service-worker.js')
   .then(function(registration) {

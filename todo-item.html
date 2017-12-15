@@ -1,4 +1,3 @@
-
 <template id='todoItemTemplate'>
     <li>
         <label id='todoItemLabel' />
@@ -40,7 +39,7 @@ class TodoItem extends HTMLElement {
 
         // Adding click event for the Delete buton.       
         this._deleteTodoButtonNode.addEventListener('click', this.delete.bind(this))
-        this._doneTodoCheckBox.addEventListener('change', this.done.bind(this))
+        this._doneTodoCheckBox.addEventListener('change', this.toggleDone.bind(this))
 
         this.updateLabelTo(labelText)
     }
@@ -49,7 +48,7 @@ class TodoItem extends HTMLElement {
         this._labelNodeNode.innerText = labelText
     }
 
-    done() {
+    toggleDone() {
         if (this._doneTodoCheckBox.checked) {
             this._labelNodeNode.classList.add('done');
         } else {
