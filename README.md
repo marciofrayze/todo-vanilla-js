@@ -22,7 +22,7 @@ To learn more about JavaScript and Web Components.
 
 ## This example is too complex!
 
-Sure. You could do a much simpler TODO using plain JavaScript. But the goal of this project is to show how you can use vanilla JavaScript to create independent components and how they can interact with each other using a simple one-way data flow.
+Sure. You could do a much simpler TODO using plain JavaScript. But the goal of this project is to show how you can use vanilla JavaScript to create independent components and how they can interact with each other.
 
 ## Can I use something like this in production?
 
