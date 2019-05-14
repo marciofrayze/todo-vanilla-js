@@ -1,5 +1,7 @@
 # TODO Vanilla JS
 
+**Warning: this project is deprecated. HTML import is not a part of web components specification anymore.**
+
 A simple TODO example using vanilla JS but featuring HTML import and Web Components.
 
 Please use Google-Chrome. No polyfills are provided so it may not work on other browsers (yet).
